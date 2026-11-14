@@ -27,7 +27,7 @@ python "$APP/prayer_reminders.py" find
 echo ">> Testing (listen to your Google speaker)..."
 python "$APP/prayer_reminders.py" test || true
 
-pkill -f "prayer_reminders.py run" 2>/dev/null || true
+pkill -f "[p]rayer_reminders.py run" 2>/dev/null || true
 nohup "$HOME/.termux/boot/start-prayer-reminders" >/dev/null 2>&1 &
 echo
 python "$APP/prayer_reminders.py" today
