@@ -1,0 +1,7 @@
+local.json
+cache/
+audio/
+paused_until.txt
+reminders.log
+*.tmp
+__pycache__/
