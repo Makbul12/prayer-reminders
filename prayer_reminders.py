@@ -319,8 +319,12 @@ def find_speaker(cfg):
         if not name and ip and c.cast_info.host == ip:
             chosen = c
             break
-    if chosen is None and not name and len(casts) == 1:
-        chosen = casts[0]
+    if chosen is None and not name and casts:
+        # Several devices: skip speaker groups, prefer a Google Home / Nest speaker.
+        singles = [c for c in casts if getattr(c.cast_info, "cast_type", "") != "group"]
+        homes = [c for c in singles
+                 if any(w in (c.cast_info.model_name or "").lower() for w in ("home", "mini", "nest"))]
+        chosen = (homes or singles or casts)[0]
         cfg["speaker_name"] = chosen.cast_info.friendly_name
         cfg["speaker_ip"] = chosen.cast_info.host
         save_speaker(cfg["speaker_name"], cfg["speaker_ip"])
